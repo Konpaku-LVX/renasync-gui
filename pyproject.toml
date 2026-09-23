@@ -1,0 +1,31 @@
+[build-system]
+requires = ['setuptools>=61']
+build-backend = 'setuptools.build_meta'
+
+[project]
+name = 'renasync-gui'
+version = '0.0.1'
+description = 'Lightweight GUI addon for Renasync'
+
+readme = 'README.md'
+requires-python = '>=3.10'
+license = {text = '0BSD'}
+license-files = ['LICENSE']
+
+keywords = ['renasync', 'sync', 'playback', 'tkinter']
+classifiers = [
+	'Operating System :: OS Independent',
+	'Programming Language :: Python :: 3'
+]
+
+# renasync itself is installed separately (package manager, upstream zipapp)
+dependencies = []
+
+[project.scripts]
+renasync-gui = 'renasync_gui:main'
+
+[project.optional-dependencies]
+build = ['pyinstaller']
+
+[tool.setuptools.packages.find]
+where = ['src']

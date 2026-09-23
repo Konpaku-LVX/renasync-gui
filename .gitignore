@@ -1,0 +1,8 @@
+/renasync-gui
+*.egg-info
+__pycache__/
+*.pyc
+*.spec
+build
+dist
+mpv-1.dll
