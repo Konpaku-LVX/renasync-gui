@@ -1,0 +1,19 @@
+[project]
+name = "renasync"
+version = "1.0.2"
+description = "Vendor of renasync (client.py) for bundling the Windows exe build"
+requires-python = ">=3.10"
+license = '0BSD'
+license-files = ['LICENSE']
+dependencies = [
+    'websockets>=15',
+    'mpv>=1.0.4',
+]
+
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+packages = ["renasync"]

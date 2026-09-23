@@ -82,9 +82,10 @@ if (-not (Test-Path $dll)) {
 	Remove-Item $extract -Recurse -Force -ErrorAction SilentlyContinue
 }
 
-# install deps and build the exe (renasync is pulled from Codeberg and bundled)
+# install deps and build the exe (renasync 1.0.2 is pulled from Codeberg and bundled;
+# if Codeberg is unreachable, pin $root to vendor/renasync instead)
 Push-Location $root
-python -m pip install --quiet 'git+https://codeberg.org/xordev/renasync.git' '.[build]'
+python -m pip install --quiet 'git+https://codeberg.org/xordev/renasync.git@1.0.2' '.[build]'
 $pipExit = $LASTEXITCODE
 Pop-Location
 
