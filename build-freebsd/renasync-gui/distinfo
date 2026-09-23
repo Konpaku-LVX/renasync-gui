@@ -1,0 +1,5 @@
+# NOTE: placeholder checksums. Generate the real ones with:
+#   make makesum     (fetches or uses the distfile already in ${DISTDIR})
+TIMESTAMP = 0
+SHA256 (0.0.1.tar.gz) = 0000000000000000000000000000000000000000000000000000000000000000
+SIZE (0.0.1.tar.gz) = 0
