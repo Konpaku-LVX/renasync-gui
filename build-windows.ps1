@@ -1,7 +1,7 @@
 #!/usr/bin/env pwsh
 # Build a standalone windows gui executable and setup installer.
 # Pulls in renasync itself (from Codeberg) and bundles it with the addon.
-# Requires: python, pip, git and either the 7z tool or a prebuilt mpv-1.dll.
+# Requires: python, pip, git and either the 7z tool or a prebuilt mpv runtime dll.
 # Inno Setup is installed automatically when missing (winget, then choco).
 
 param(
@@ -12,7 +12,22 @@ param(
 $ErrorActionPreference = 'Stop'
 
 $root = Split-Path -Parent $MyInvocation.MyCommand.Path
-$dll = Join-Path $root 'mpv-1.dll'
+
+# Bundle the libmpv runtime as mpv-2.dll: python-mpv looks for it first,
+# then libmpv-2.dll, then mpv-1.dll.
+$dll = Join-Path $root 'mpv-2.dll'
+
+# accept a prebuilt runtime dll dropped next to this script (any soname)
+if (-not (Test-Path $dll)) {
+	foreach ($alt in @('mpv-2.dll', 'libmpv-2.dll', 'mpv-1.dll', 'libmpv-1.dll')) {
+		$candidate = Join-Path $root $alt
+
+		if (Test-Path $candidate) {
+			Move-Item $candidate $dll
+			break
+		}
+	}
+}
 
 # fetch windows libmpv if not already present
 if (-not (Test-Path $dll)) {
@@ -41,7 +56,7 @@ if (-not (Test-Path $dll)) {
 	}
 
 	if (-not $sevenzip) {
-		throw '7z is required to extract mpv-1.dll (place a prebuilt mpv-1.dll next to this script instead)'
+		throw '7z is required to extract the mpv runtime dll (place a prebuilt mpv dll next to this script instead)'
 	}
 
 	$seven = $sevenzip.Source
@@ -51,17 +66,15 @@ if (-not (Test-Path $dll)) {
 
 	& $seven x $archive "-o$extract" | Out-Null
 
-	# the runtime dll lives under a bin directory in the dev archive
-	$found = Get-ChildItem $extract -Recurse -Filter 'mpv-1.dll' |
-		Where-Object { $_.FullName -match '\\bin\\' } |
+	# the runtime dll may sit in a bin dir or at the archive root, under
+	# mpv-1.dll, libmpv-1.dll, mpv-2.dll or libmpv-2.dll depending on the
+	# mpv soname of the current release
+	$found = Get-ChildItem $extract -Recurse -File |
+		Where-Object { $_.Name -match '^(lib)?mpv-[0-9]+\.dll$' } |
 		Select-Object -First 1
 
 	if (-not $found) {
-		$found = Get-ChildItem $extract -Recurse -Filter 'mpv-1.dll' | Select-Object -First 1
-	}
-
-	if (-not $found) {
-		throw 'mpv-1.dll not found in archive'
+		throw "mpv runtime dll not found in archive $($asset.name)"
 	}
 
 	Copy-Item $found.FullName $dll

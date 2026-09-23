@@ -71,11 +71,11 @@ Set-ExecutionPolicy -Scope Process Bypass
 .\build-windows.ps1
 ```
 
-The script fetches `mpv-1.dll` automatically, installs PyInstaller and Inno Setup (via
-winget/choco) when missing, and names the installer after the nearest git tag (defaults to
-`0.0.1` when not in a git checkout). It pulls renasync from Codeberg and bundles it with
-the addon into the exe, so the result is self-contained. Pass `-NoInstaller` to build just
-the exe.
+The script fetches the libmpv runtime dll (`mpv-2.dll`) automatically, installs
+PyInstaller and Inno Setup (via winget/choco) when missing, and names the installer after
+the nearest git tag (defaults to `0.0.1` when not in a git checkout). It pulls renasync
+from Codeberg and bundles it with the addon into the exe, so the result is
+self-contained. Pass `-NoInstaller` to build just the exe.
 
 Tag a release with `v*` and push it to your hosting forge to build and attach both files
 automatically (see `.github/workflows/windows.yml`).

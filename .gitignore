@@ -5,4 +5,7 @@ __pycache__/
 *.spec
 build
 dist
+mpv-2.dll
 mpv-1.dll
+libmpv-2.dll
+libmpv-1.dll
