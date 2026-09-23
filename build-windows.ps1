@@ -85,13 +85,23 @@ if (-not (Test-Path $dll)) {
 # install deps and build the exe (renasync is pulled from Codeberg and bundled)
 Push-Location $root
 python -m pip install --quiet 'git+https://codeberg.org/xordev/renasync.git' '.[build]'
+$pipExit = $LASTEXITCODE
 Pop-Location
+
+if ($pipExit -ne 0) {
+	throw "pip install failed with exit code $pipExit"
+}
 
 $entry = Join-Path $env:TEMP 'renasync_gui_entry.py'
 Set-Content -Path $entry -Value "from renasync_gui import main`nmain()`n"
 
 python -m PyInstaller -F -w -n renasync-gui --add-data "$dll;." $entry
+$pyiExit = $LASTEXITCODE
 Remove-Item $entry -Force
+
+if ($pyiExit -ne 0) {
+	throw "PyInstaller failed with exit code $pyiExit"
+}
 
 Write-Host "Built dist/renasync-gui.exe"
 
