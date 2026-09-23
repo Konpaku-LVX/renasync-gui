@@ -1,5 +1,3 @@
-# NOTE: placeholder checksums. Generate the real ones with:
-#   make makesum     (fetches or uses the distfile already in ${DISTDIR})
 TIMESTAMP = 0
-SHA256 (0.0.1.tar.gz) = 0000000000000000000000000000000000000000000000000000000000000000
-SIZE (0.0.1.tar.gz) = 0
+SHA256 (Konpaku-LVX-renasync-gui-0.0.1-v0.0.1_GH0.tar.gz) = 0000000000000000000000000000000000000000000000000000000000000000
+SIZE (Konpaku-LVX-renasync-gui-0.0.1-v0.0.1_GH0.tar.gz) = 0

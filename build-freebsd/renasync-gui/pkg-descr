@@ -6,5 +6,3 @@ usual.
 
 The addon imports renasync at runtime, so the renasync package must be
 installed separately (see multimedia/renasync).
-
-WWW: https://codeberg.org/<your-account>/renasync-gui
