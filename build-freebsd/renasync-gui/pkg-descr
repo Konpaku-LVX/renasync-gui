@@ -1,8 +1,0 @@
-renasync-gui is a lightweight GUI addon for Renasync. It keeps the terminal
-hidden while you chat and watch: a small dialog picks a server, room and name
-(saved connections are remembered), then the room window opens with the chat,
-the online users and a shared playlist. mpv still opens in its own window as
-usual.
-
-The addon imports renasync at runtime, so the renasync package must be
-installed separately (see multimedia/renasync).
